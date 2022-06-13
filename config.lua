@@ -33,28 +33,79 @@ lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR
 --   },
 -- }
 
-lvim.builtin.which_key.mappings["m"] = {"<cmd>Telescope marks<CR>", "marks"}
-lvim.builtin.which_key.mappings["."] = {"<cmd>Telescope treesitter<CR>", "tags"}
+lvim.builtin.which_key.mappings["m"] = { "<cmd>Telescope marks<CR>", "marks" }
+lvim.builtin.which_key.mappings["."] = { "<cmd>Telescope treesitter<CR>", "tags" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
-  t = {"<cmd>Telescope live_grep<CR>", "find in path"},
-  f = {"<cmd>Telescope find_files<CR>", "find file"},
-  a = {"<cmd>Telescope treesitter<CR>", "show all symbols"},
-  d = {"<cmd>Telescope lsp_definitions<CR>", "show definitions"},
-  r = {"<cmd>Telescope lsp_references<CR>", "show references"}
+  t = { "<cmd>Telescope live_grep<CR>", "find in path" },
+  f = { "<cmd>Telescope find_files<CR>", "find file" },
+  a = { "<cmd>Telescope treesitter<CR>", "show all symbols" },
+  d = { "<cmd>Telescope lsp_definitions<CR>", "show definitions" },
+  r = { "<cmd>Telescope lsp_references<CR>", "show references" }
 }
 
 lvim.builtin.which_key.mappings["Z"] = {
   name = "+Zen",
-  m = {"<cmd> :ZenMode<CR>", "Toggle Zen"}
+  m = { "<cmd> :ZenMode<CR>", "Toggle Zen" }
 }
 
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.nvimtree.setup.renderer = {
+  add_trailing = false,
+  group_empty = false,
+  highlight_git = true,
+  full_name = false,
+  root_folder_modifier = ":~",
+  indent_markers = {
+    enable = false,
+    icons = {
+      corner = "└ ",
+      edge = "│ ",
+      item = "│ ",
+      none = "  ",
+    },
+  },
+  icons = {
+    webdev_colors = true,
+    git_placement = "before",
+    padding = " ",
+    symlink_arrow = " ➛ ",
+    show = {
+      file = true,
+      folder = true,
+      folder_arrow = true,
+      git = true,
+    },
+    glyphs = {
+      default = "",
+      symlink = "",
+      folder = {
+        arrow_closed = "",
+        arrow_open = "",
+        default = "",
+        open = "",
+        empty = "",
+        empty_open = "",
+        symlink = "",
+        symlink_open = "",
+      },
+      git = {
+        unstaged = "✗",
+        staged = "✓",
+        unmerged = "",
+        renamed = "➜",
+        untracked = "★",
+        deleted = "",
+        ignored = "◌",
+      },
+    },
+  },
+  special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+}
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -73,7 +124,7 @@ lvim.builtin.treesitter.ensure_installed = {
 
 
 lvim.plugins = {
-  {"folke/tokyonight.nvim"},
+  { "folke/tokyonight.nvim" },
   {
     "marko-cerovac/material.nvim",
     config = function()
@@ -82,11 +133,11 @@ lvim.plugins = {
       })
     end
   },
-  {"glepnir/oceanic-material"},
-  {"mhartington/oceanic-next"},
-  {"kkoomen/vim-doge"},
-  {"xolox/vim-misc"},
-  {"xolox/vim-notes"},
+  { "glepnir/oceanic-material" },
+  { "mhartington/oceanic-next" },
+  { "kkoomen/vim-doge" },
+  { "xolox/vim-misc" },
+  { "xolox/vim-notes" },
   -- {"MattesGroeger/vim-bookmarks"},
   -- {"tom-anders/telescope-vim-bookmarks.nvim"},
   {
@@ -116,7 +167,7 @@ lvim.plugins = {
   {
     -- Plugin for quickly changing parenthesis, brackets and others
     "tpope/vim-surround",
-    keys = {"c", "d", "y"}
+    keys = { "c", "d", "y" }
   },
   {
     "folke/zen-mode.nvim",
@@ -131,11 +182,11 @@ lvim.plugins = {
   {
     "folke/twilight.nvim",
     config = function()
-    require("twilight").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
+      require("twilight").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
     end
   },
   {
@@ -143,14 +194,10 @@ lvim.plugins = {
   },
 }
 
-lvim.autocommands.custom_groups = {
-  { "BufWritePost", "*", ":Prettier" }
-}
-
 require "lsp_signature".setup()
 -- require("telescope").load_extension("vim_bookmarks")
 
--- local formatters = require "lvim.lsp.null-ls.formatters" 
+-- local formatters = require "lvim.lsp.null-ls.formatters"
 -- formatters.setup { { exe = "prettier", args = { "--print-with", "100" }, }, }
 
 -- vim.g.minimap_width = 10
@@ -174,12 +221,12 @@ lvim.lsp.diagnostics.virtual_text = true
 vim.g.material_style = "oceanic"
 
 local components = require("lvim.core.lualine.components")
-lvim.builtin.lualine.sections.lualine_a = {"mode"}
-lvim.builtin.lualine.sections.lualine_b = {components.branch, components.diff, components.diagnostics}
-lvim.builtin.lualine.sections.lualine_c = {components.filename}
-lvim.builtin.lualine.sections.lualine_x = {components.encoding, "fileformat", components.filetype}
-lvim.builtin.lualine.sections.lualine_y= {components.progress}
-lvim.builtin.lualine.sections.lualine_z = {components.location}
+lvim.builtin.lualine.sections.lualine_a = { "mode" }
+lvim.builtin.lualine.sections.lualine_b = { components.branch, components.diff, components.diagnostics }
+lvim.builtin.lualine.sections.lualine_c = { components.filename }
+lvim.builtin.lualine.sections.lualine_x = { components.encoding, "fileformat", components.filetype }
+lvim.builtin.lualine.sections.lualine_y = { components.progress }
+lvim.builtin.lualine.sections.lualine_z = { components.location }
 
 lvim.builtin.lualine.tabline = {}
 lvim.builtin.lualine.extensions = {}
@@ -187,8 +234,8 @@ lvim.builtin.lualine.extensions = {}
 lvim.builtin.lualine.options = {
   icons_enabled = true,
   theme = "auto",
-  component_separators = { left = '', right = ''},
-  section_separators = { left = '', right = ''},
+  component_separators = { left = '', right = '' },
+  section_separators = { left = '', right = '' },
   disabled_filetypes = {},
   always_divide_middle = true,
 }
