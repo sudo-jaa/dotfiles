@@ -33,7 +33,8 @@ lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR
 --   },
 -- }
 
-
+lvim.builtin.which_key.mappings["m"] = {"<cmd>Telescope marks<CR>", "marks"}
+lvim.builtin.which_key.mappings["."] = {"<cmd>Telescope treesitter<CR>", "tags"}
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
@@ -42,6 +43,11 @@ lvim.builtin.which_key.mappings["t"] = {
   a = {"<cmd>Telescope treesitter<CR>", "show all symbols"},
   d = {"<cmd>Telescope lsp_definitions<CR>", "show definitions"},
   r = {"<cmd>Telescope lsp_references<CR>", "show references"}
+}
+
+lvim.builtin.which_key.mappings["Z"] = {
+  name = "+Zen",
+  m = {"<cmd> :ZenMode<CR>", "Toggle Zen"}
 }
 
 lvim.builtin.dashboard.active = true
@@ -81,8 +87,8 @@ lvim.plugins = {
   {"kkoomen/vim-doge"},
   {"xolox/vim-misc"},
   {"xolox/vim-notes"},
-  {"MattesGroeger/vim-bookmarks"},
-  {"tom-anders/telescope-vim-bookmarks.nvim"},
+  -- {"MattesGroeger/vim-bookmarks"},
+  -- {"tom-anders/telescope-vim-bookmarks.nvim"},
   {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -93,18 +99,73 @@ lvim.plugins = {
   },
   {
     "ray-x/lsp_signature.nvim",
-    config = function() require"lsp_signature".on_attach() end,
-    event = "BufRead"
-    },
+    config = function()
+      require "lsp_signature".setup()
+    end
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  -- {
+  --   'wfxr/minimap.vim',
+  --   run = "cargo install --locked code-minimap",
+  -- },
+  {
+    -- Plugin for quickly changing parenthesis, brackets and others
+    "tpope/vim-surround",
+    keys = {"c", "d", "y"}
+  },
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  },
+  {
+    "folke/twilight.nvim",
+    config = function()
+    require("twilight").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+    end
+  },
+  {
+    "prettier/vim-prettier"
+  },
 }
 
-require("telescope").load_extension("vim_bookmarks")
-
-lvim.builtin.which_key.mappings["m"] = {
-  name = "+FindBookmarks",
-  all = {"<cmd>Telescope vim_bookmarks all<CR>", "Show all Bookmarks"},
-  this = {"<cmd>Telescope vim_bookmarks current_file<CR>", "Show current file bookmarks"}
+lvim.autocommands.custom_groups = {
+  { "BufWritePost", "*", ":Prettier" }
 }
+
+require "lsp_signature".setup()
+-- require("telescope").load_extension("vim_bookmarks")
+
+-- local formatters = require "lvim.lsp.null-ls.formatters" 
+-- formatters.setup { { exe = "prettier", args = { "--print-with", "100" }, }, }
+
+-- vim.g.minimap_width = 10
+-- vim.g.minimap_auto_start = 1
+-- vim.g.minimap_auto_start_win_enter = 1
+-- vim.g.minimap_git_colors = 1
+-- vim.g.minimap_highlight_search = 1
+
+-- lvim.builtin.which_key.mappings["+"] = {
+--   name = "+FindBookmarks",
+--   a = {"<cmd>Telescope marks<CR>", "Show all Bookmarks"},
+--   -- t = {"<cmd>Telescope help_tags<CR>", "Show all tags"},
+-- }
+
+
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
@@ -131,4 +192,3 @@ lvim.builtin.lualine.options = {
   disabled_filetypes = {},
   always_divide_middle = true,
 }
-
