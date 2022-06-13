@@ -10,7 +10,7 @@ lvim.keys.normal_mode = {
 }
 lvim.keys.normal_mode["B"] = "^"
 lvim.keys.normal_mode["W"] = "$"
-lvim.keys.normal_mode["P"] = "<cmd>lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>"
+lvim.keys.normal_mode["P"] = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 
 lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR>", "References(lsp)" }
 
