@@ -1,7 +1,8 @@
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "material"
+vim.o.termguicolors = true;
 
+lvim.colorscheme = "material"
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
@@ -13,7 +14,6 @@ lvim.keys.normal_mode["W"] = "$"
 lvim.keys.normal_mode["P"] = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 
 lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR>", "References(lsp)" }
-
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -33,6 +33,10 @@ lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR
 --   },
 -- }
 
+lvim.builtin.which_key.mappings["-"] = {
+  a = { "<cmd>Telescope quickfix<CR>", "Code Action" }
+}
+
 lvim.builtin.which_key.mappings["m"] = { "<cmd>Telescope marks<CR>", "marks" }
 lvim.builtin.which_key.mappings["."] = { "<cmd>Telescope treesitter<CR>", "tags" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -51,6 +55,8 @@ lvim.builtin.which_key.mappings["Z"] = {
 }
 
 lvim.builtin.alpha.active = true
+lvim.builtin.alpha.mode = "dashboard"
+
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -121,7 +127,6 @@ lvim.builtin.treesitter.ensure_installed = {
   "java",
   "yaml",
 }
-
 
 lvim.plugins = {
   { "folke/tokyonight.nvim" },
@@ -239,3 +244,56 @@ lvim.builtin.lualine.options = {
   disabled_filetypes = {},
   always_divide_middle = true,
 }
+
+-- local logo = {
+--   "                                                   &&&&                                               ",
+--   "                                                &&&&&&&&&&                                          ",
+--   "                                             &&&&&&&&&&&&&&                                         ",
+--   "                                          /&&&&&&&&&&&&&&                                           ",
+--   "                                        &&&&&&&&&&&&&&&                                             ",
+--   "                                     &&&&&&&&&&&&&&&                                                ",
+--   "                                   &&&&&&&&&&&&&&&                                                  ",
+--   "                                &&&&&&&&&&&&&&&                                                     ",
+--   "                              &&&&&&&&&&&&&&        &&                                              ",
+--   "                            &&&&&&&&&&&&&&       &&&&&&&                                            ",
+--   "                         &&&&&&&&&&&&&&&       &&&&&&&&&&&&                                         ",
+--   "                        &&&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                       ",
+--   "                           &&&&&&&&&&&&&&        &&&&&&&&&&&&&&&                                    ",
+--   "                             &&&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                  ",
+--   "                                &&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                ",
+--   "                                   &&&&&&&&&&&&&&       &&&&&&&&&&&&&&&                             ",
+--   "                                     &&&&&&&&&&&&&&        &&&&&&&&&&&&&&                           ",
+--   "                                        &&&&&&&&&&&       &&&&&&&&&&&&&&&                           ",
+--   "                                          &&&&&&        &&&&&&&&&&&&&&                              ",
+--   "                                                     /&&&&&&&&&&&&&&                                ",
+--   "                                                   &&&&&&&&&&&&&&                                   ",
+--   "                                                /&&&&&&&&&&&&&                                      ",
+--   "                                              &&&&&&&&&&&&&&                                        ",
+--   "                                           /&&&&&&&&&&&&&                                           ",
+--   "                                         &&&&&&&&&&&&&                                              ",
+--   "                                      /&&&&&&&&&&&&&                                                ",
+--   "                                       &&&&&&&&&&                                                   ",
+--   "                                         &&&&&&                                                     ",
+-- }
+
+local logo = {
+  "0     1     1     0     1     1     1     0",
+  "0     1     1     0     0     1     0     1",
+  "0     1     1     0     1     1     1     1",
+  "0     1     1     1     0     1     1     0",
+  "0     1     1     0     1     0     0     1",
+  "0     1     1     0     1     1     0     1",
+}
+
+
+lvim.builtin.alpha.dashboard.section.header.opts.hl = "Comment"
+-- lvim.builtin.alpha.dashboard.config.layout = {
+--   { type = 'padding', val = 4 },
+--   lvim.builtin.alpha.dashboard.section.header,
+--   { type = 'padding', val = 4 },
+--   lvim.builtin.alpha.dashboard.section.buttons,
+--   { type = 'padding', val = 4 },
+--   lvim.builtin.alpha.dashboard.section.footer
+-- }
+
+lvim.builtin.alpha.dashboard.section.header.val = logo
