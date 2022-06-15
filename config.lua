@@ -172,7 +172,7 @@ lvim.plugins = {
   {
     -- Plugin for quickly changing parenthesis, brackets and others
     "tpope/vim-surround",
-    keys = { "c", "d", "y" }
+    -- keys = { "c", "d", "y" }
   },
   {
     "folke/zen-mode.nvim",
@@ -197,6 +197,9 @@ lvim.plugins = {
   {
     "prettier/vim-prettier"
   },
+  {
+    "ggandor/lightspeed.nvim"
+  }
 }
 
 require "lsp_signature".setup()
@@ -228,8 +231,9 @@ vim.g.material_style = "oceanic"
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
 lvim.builtin.lualine.sections.lualine_b = { components.branch, components.diff, components.diagnostics }
-lvim.builtin.lualine.sections.lualine_c = { components.filename }
-lvim.builtin.lualine.sections.lualine_x = { components.encoding, "fileformat", components.filetype }
+lvim.builtin.lualine.sections.lualine_c = { { "filename", path = 1 }, "fileformat",
+  components.filetype }
+lvim.builtin.lualine.sections.lualine_x = {}
 lvim.builtin.lualine.sections.lualine_y = { components.progress }
 lvim.builtin.lualine.sections.lualine_z = { components.location }
 
