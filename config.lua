@@ -310,3 +310,9 @@ lvim.builtin.alpha.dashboard.section.header.opts.hl = "Comment"
 -- }
 
 lvim.builtin.alpha.dashboard.section.header.val = logo
+
+require('material').setup {
+  custom_highlights = {
+    LineNr = { fg = "#557381" }
+  }
+}
