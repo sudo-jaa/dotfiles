@@ -1,5 +1,5 @@
 lvim.log.level = "warn"
-lvim.format_on_save = true
+lvim.format_on_save = false
 vim.o.termguicolors = true;
 
 lvim.colorscheme = "material"
@@ -32,6 +32,8 @@ lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
+
+vim.o.scrolloff = 999
 
 lvim.builtin.which_key.mappings["-"] = {
   a = { "<cmd>Telescope quickfix<CR>", "Code Action" }
@@ -107,8 +109,8 @@ lvim.builtin.nvimtree.setup.renderer = {
         untracked = "★",
         deleted = "",
         ignored = "◌",
-      },
-    },
+      }
+    }
   },
   special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
 }
@@ -199,10 +201,58 @@ lvim.plugins = {
   },
   {
     "ggandor/lightspeed.nvim"
+  },
+  -- {
+  --   "simrat39/rust-tools.nvim"
+  -- },
+  {
+    "ahmedkhalf/lsp-rooter.nvim",
+  },
+  {
+    "haringsrob/nvim_context_vt"
+  },
+  {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
   }
 }
 
 require "lsp_signature".setup()
+
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+
+lvim.plugins = {
+  {
+    "simrat39/rust-tools.nvim",
+    config = function()
+      local lsp_installer_servers = require "nvim-lsp-installer.servers"
+      local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
+      require("rust-tools").setup({
+        tools = {
+          autoSetHints = true,
+          hover_with_actions = true,
+          runnables = {
+            use_telescope = true,
+          },
+        },
+        server = {
+          cmd_env = requested_server._default_options.cmd_env,
+          on_attach = require("lvim.lsp").common_on_attach,
+          on_init = require("lvim.lsp").common_on_init,
+        },
+      })
+    end,
+    ft = { "rust", "rs" },
+  },
+}
+
 -- require("telescope").load_extension("vim_bookmarks")
 
 -- local formatters = require "lvim.lsp.null-ls.formatters"
@@ -281,6 +331,9 @@ lvim.builtin.lualine.options = {
 -- }
 
 local logo = {
+  "",
+  "",
+  "",
   "0     1     1     0     1     1     1     0",
   "0     1     1     0     0     1     0     1",
   "0     1     1     0     1     1     1     1",
@@ -320,3 +373,4 @@ require('material').setup {
     LineNr = { fg = "#557381" }
   }
 }
+
