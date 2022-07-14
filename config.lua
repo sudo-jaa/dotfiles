@@ -13,7 +13,10 @@ lvim.keys.normal_mode["B"] = "^"
 lvim.keys.normal_mode["W"] = "$"
 lvim.keys.normal_mode["P"] = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 
+lvim.keys.normal_mode[":W"] = ":w<cr>"
+
 lvim.lsp.buffer_mappings.normal_mode["gr"] = { "<cmd>Telescope lsp_references<CR>", "References(lsp)" }
+lvim.lsp.buffer_mappings.normal_mode["gI"] = { "<cmd>Telescope lsp_implementations<CR>", "Implementations(lsp)" }
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -55,6 +58,8 @@ lvim.builtin.which_key.mappings["Z"] = {
   name = "+Zen",
   m = { "<cmd> :ZenMode<CR>", "Toggle Zen" }
 }
+
+lvim.keys.normal_mode["<leader>+"] = "<cmd>Telescope buffers<CR>"
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -142,7 +147,6 @@ lvim.plugins = {
   },
   { "glepnir/oceanic-material" },
   { "mhartington/oceanic-next" },
-  { "kkoomen/vim-doge" },
   { "xolox/vim-misc" },
   { "xolox/vim-notes" },
   -- {"MattesGroeger/vim-bookmarks"},
@@ -177,9 +181,15 @@ lvim.plugins = {
     -- keys = { "c", "d", "y" }
   },
   {
+    'wellle/targets.vim'
+  },
+  {
     "folke/zen-mode.nvim",
     config = function()
       require("zen-mode").setup {
+        window = {
+          width = 1
+        }
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
@@ -202,15 +212,6 @@ lvim.plugins = {
   {
     "ggandor/lightspeed.nvim"
   },
-  -- {
-  --   "simrat39/rust-tools.nvim"
-  -- },
-  {
-    "ahmedkhalf/lsp-rooter.nvim",
-  },
-  {
-    "haringsrob/nvim_context_vt"
-  },
   {
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
@@ -221,15 +222,8 @@ lvim.plugins = {
         -- refer to the configuration section below
       }
     end
-  }
-}
-
-require "lsp_signature".setup()
-
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
-
-lvim.plugins = {
-  {
+  },
+    {
     "simrat39/rust-tools.nvim",
     config = function()
       local lsp_installer_servers = require "nvim-lsp-installer.servers"
@@ -251,7 +245,31 @@ lvim.plugins = {
     end,
     ft = { "rust", "rs" },
   },
+  {
+    "rcarriga/nvim-dap-ui"
+  },
+  {
+    "gennaro-tedesco/nvim-peekup"
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim'
+  },
+  {
+    "tpope/vim-fugitive"
+  }
 }
+
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+}
+
+lvim.builtin.dap.active = true
+
+require "lsp_signature".setup()
+
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 
 -- require("telescope").load_extension("vim_bookmarks")
 
@@ -269,7 +287,6 @@ lvim.plugins = {
 --   a = {"<cmd>Telescope marks<CR>", "Show all Bookmarks"},
 --   -- t = {"<cmd>Telescope help_tags<CR>", "Show all tags"},
 -- }
-
 
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -373,4 +390,3 @@ require('material').setup {
     LineNr = { fg = "#557381" }
   }
 }
-
