@@ -256,8 +256,16 @@ lvim.plugins = {
   },
   {
     "tpope/vim-fugitive"
-  }
+  },
 }
+
+require('telescope').setup({
+  pickers = {
+    buffers = {
+      theme = "dropdown",
+    }
+  }
+})
 
 require("indent_blankline").setup {
     -- for example, context is off by default, use this to turn it on
@@ -266,8 +274,8 @@ require("indent_blankline").setup {
 }
 
 lvim.builtin.dap.active = true
-
 require "lsp_signature".setup()
+-- require'navigator'.setup()
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 
@@ -390,3 +398,4 @@ require('material').setup {
     LineNr = { fg = "#557381" }
   }
 }
+
