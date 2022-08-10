@@ -54,7 +54,7 @@ lvim.builtin.which_key.mappings["t"] = {
   r = { "<cmd>Telescope lsp_references<CR>", "show references" }
 }
 
-lvim.builtin.which_key.mappings["Z"] = {
+lvim.builtin.which_key.mappings["z"] = {
   name = "+Zen",
   m = { "<cmd> :ZenMode<CR>", "Toggle Zen" }
 }
@@ -188,7 +188,8 @@ lvim.plugins = {
     config = function()
       require("zen-mode").setup {
         window = {
-          width = 1
+          width = 120,
+          height = 1
         }
         -- your configuration comes here
         -- or leave it empty to use the default settings
@@ -223,28 +224,28 @@ lvim.plugins = {
       }
     end
   },
-    {
-    "simrat39/rust-tools.nvim",
-    config = function()
-      local lsp_installer_servers = require "nvim-lsp-installer.servers"
-      local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
-      require("rust-tools").setup({
-        tools = {
-          autoSetHints = true,
-          hover_with_actions = true,
-          runnables = {
-            use_telescope = true,
-          },
-        },
-        server = {
-          cmd_env = requested_server._default_options.cmd_env,
-          on_attach = require("lvim.lsp").common_on_attach,
-          on_init = require("lvim.lsp").common_on_init,
-        },
-      })
-    end,
-    ft = { "rust", "rs" },
-  },
+  --   {
+  --   "simrat39/rust-tools.nvim",
+  --   config = function()
+  --     local lsp_installer_servers = require "nvim-lsp-installer.servers"
+  --     local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
+  --     require("rust-tools").setup({
+  --       tools = {
+  --         autoSetHints = true,
+  --         hover_with_actions = true,
+  --         runnables = {
+  --           use_telescope = true,
+  --         },
+  --       },
+  --       server = {
+  --         cmd_env = requested_server._default_options.cmd_env,
+  --         on_attach = require("lvim.lsp").common_on_attach,
+  --         on_init = require("lvim.lsp").common_on_init,
+  --       },
+  --     })
+  --   end,
+  --   ft = { "rust", "rs" },
+  -- },
   {
     "rcarriga/nvim-dap-ui"
   },
@@ -257,6 +258,15 @@ lvim.plugins = {
   {
     "tpope/vim-fugitive"
   },
+  {
+    "ludovicchabant/vim-gutentags"
+  },
+  {
+    'quangnguyen30192/cmp-nvim-tags',
+  },
+  {
+    'liuchengxu/vista.vim'
+  }
 }
 
 require('telescope').setup({
@@ -277,7 +287,7 @@ lvim.builtin.dap.active = true
 require "lsp_signature".setup()
 -- require'navigator'.setup()
 
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 
 -- require("telescope").load_extension("vim_bookmarks")
 
@@ -324,37 +334,6 @@ lvim.builtin.lualine.options = {
   always_divide_middle = true,
 }
 
--- local logo = {
---   "                                                   &&&&                                               ",
---   "                                                &&&&&&&&&&                                          ",
---   "                                             &&&&&&&&&&&&&&                                         ",
---   "                                          /&&&&&&&&&&&&&&                                           ",
---   "                                        &&&&&&&&&&&&&&&                                             ",
---   "                                     &&&&&&&&&&&&&&&                                                ",
---   "                                   &&&&&&&&&&&&&&&                                                  ",
---   "                                &&&&&&&&&&&&&&&                                                     ",
---   "                              &&&&&&&&&&&&&&        &&                                              ",
---   "                            &&&&&&&&&&&&&&       &&&&&&&                                            ",
---   "                         &&&&&&&&&&&&&&&       &&&&&&&&&&&&                                         ",
---   "                        &&&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                       ",
---   "                           &&&&&&&&&&&&&&        &&&&&&&&&&&&&&&                                    ",
---   "                             &&&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                  ",
---   "                                &&&&&&&&&&&&&&        &&&&&&&&&&&&&&                                ",
---   "                                   &&&&&&&&&&&&&&       &&&&&&&&&&&&&&&                             ",
---   "                                     &&&&&&&&&&&&&&        &&&&&&&&&&&&&&                           ",
---   "                                        &&&&&&&&&&&       &&&&&&&&&&&&&&&                           ",
---   "                                          &&&&&&        &&&&&&&&&&&&&&                              ",
---   "                                                     /&&&&&&&&&&&&&&                                ",
---   "                                                   &&&&&&&&&&&&&&                                   ",
---   "                                                /&&&&&&&&&&&&&                                      ",
---   "                                              &&&&&&&&&&&&&&                                        ",
---   "                                           /&&&&&&&&&&&&&                                           ",
---   "                                         &&&&&&&&&&&&&                                              ",
---   "                                      /&&&&&&&&&&&&&                                                ",
---   "                                       &&&&&&&&&&                                                   ",
---   "                                         &&&&&&                                                     ",
--- }
-
 local logo = {
   "",
   "",
@@ -382,14 +361,6 @@ local logo = {
 
 
 lvim.builtin.alpha.dashboard.section.header.opts.hl = "Comment"
--- lvim.builtin.alpha.dashboard.config.layout = {
---   { type = 'padding', val = 4 },
---   lvim.builtin.alpha.dashboard.section.header,
---   { type = 'padding', val = 4 },
---   lvim.builtin.alpha.dashboard.section.buttons,
---   { type = 'padding', val = 4 },
---   lvim.builtin.alpha.dashboard.section.footer
--- }
 
 lvim.builtin.alpha.dashboard.section.header.val = logo
 
