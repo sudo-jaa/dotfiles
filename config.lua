@@ -63,6 +63,23 @@ lvim.builtin.which_key.mappings["z"] = {
 
 lvim.keys.normal_mode["<leader>+"] = "<cmd>Telescope buffers<CR>"
 
+require('telescope').setup{
+  pickers = {
+    find_files = {
+      theme = nil,
+    },
+    live_grep = {
+      theme = nil,
+    },
+    lsp_references = {
+      theme = "ivy"
+    },
+    treesitter = {
+      theme = "ivy"
+    }
+  },
+}
+
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 
